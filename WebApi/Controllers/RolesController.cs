@@ -1,21 +1,22 @@
-﻿using Application.UseCases.Products.Create;
-using Application.UseCases.Products.Delete;
-using Application.UseCases.Products.GetAll;
-using Application.UseCases.Products.GetById;
-using Application.UseCases.Products.Update;
+﻿using Application.UseCases.Roles.Create;
+using Application.UseCases.Roles.Delete;
+using Application.UseCases.Roles.GetAll;
+using Application.UseCases.Roles.GetById;
+using Application.UseCases.Roles.Update;
 using Domain.DomainErrors;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.Controllers
 {
-    [Route("products")]
-    public class ProductsController : ApiController
+    [Route("roles")]
+    public class RolesController : ApiController
     {
         private readonly ISender _mediator;
 
-        public ProductsController(ISender mediator)
+        public RolesController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
@@ -23,10 +24,10 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _mediator.Send(new GetAllProductsQuery());
+            var roles = await _mediator.Send(new GetAllRolesQuery());
 
-            return products.Match(
-                products => Ok(products),
+            return roles.Match(
+                roles => Ok(roles),
                 errors => Problem(errors)
             );
         }
@@ -34,33 +35,33 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var product = await _mediator.Send(new GetProductByIdQuery(id));
+            var role = await _mediator.Send(new GetRoleByIdQuery(id));
 
-            return product.Match(
-                product => Ok(product),
+            return role.Match(
+                role => Ok(role),
                 errors => Problem(errors)
             );
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
         {
             var result = await _mediator.Send(command);
 
             return result.Match(
-                product => Ok(product),
+                role => Ok(role),
                 errors => Problem(errors)
             );
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductCommand command)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRoleCommand command)
         {
             if (command.Id != id)
             {
                 List<Error> errors = new()
                 {
-                    ProductErrors.ProductNotFound,
+                    RoleErrors.RoleNotFound,
                 };
 
                 return Problem(errors);
@@ -69,7 +70,7 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(command);
 
             return result.Match(
-                product => Ok(product),
+                role => Ok(role),
                 errors => Problem(errors)
             );
         }
@@ -77,10 +78,10 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _mediator.Send(new DeleteProductCommand(id));
+            var result = await _mediator.Send(new DeleteRoleCommand(id));
 
             return result.Match(
-                product => Ok(product),
+                role => Ok(role),
                 errors => Problem(errors)
             );
         }

@@ -44,7 +44,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateOrderCommand command)
         {
             var result = await _mediator.Send(command);
 
@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateOrder(Guid id, [FromBody] UpdateOrderCommand command)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateOrderCommand command)
         {
             if (command.OrderId == id)
             {
@@ -76,7 +76,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _mediator.Send(new DeleteOrderCommand(id));
 
