@@ -23,11 +23,4 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UnitTests\ApplicationUnitTests\Categories\Delete\" />
-    <Folder Include="UnitTests\ApplicationUnitTests\Categories\GetAll\" />
-    <Folder Include="UnitTests\ApplicationUnitTests\Categories\GetById\" />
-    <Folder Include="UnitTests\ApplicationUnitTests\Categories\Update\" />
-  </ItemGroup>
-
 </Project>
