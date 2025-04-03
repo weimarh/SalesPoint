@@ -23,4 +23,9 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTests\ApplicationUnitTests\Products\GetAll\" />
+    <Folder Include="UnitTests\ApplicationUnitTests\Products\GetById\" />
+  </ItemGroup>
+
 </Project>
